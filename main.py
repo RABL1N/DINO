@@ -18,6 +18,8 @@ from util.slconfig import DictAction, SLConfig
 from util.utils import ModelEma, BestMetricHolder
 import util.misc as utils
 
+import wandb
+
 import datasets
 from datasets import build_dataset, get_coco_api_from_dataset
 from engine import evaluate, train_one_epoch, test
@@ -126,6 +128,14 @@ def main(args):
     logger.info('local_rank: {}'.format(args.local_rank))
     logger.info("args: " + str(args) + '\n')
 
+    if utils.is_main_process() and not args.eval and not args.test:
+        _run_name = os.path.basename(os.path.normpath(args.output_dir)) if args.output_dir else None
+        wandb.init(
+            project="dtu_bachelor",
+            entity="rasmuslinnemann-danmarks-tekniske-universitet-dtu",
+            name=_run_name,
+            config=vars(args),
+        )
 
     if args.frozen_weights is not None:
         assert args.masks, "Frozen training is meant for segmentation only"
@@ -353,6 +363,21 @@ def main(args):
         epoch_time_str = str(datetime.timedelta(seconds=int(epoch_time)))
         log_stats['epoch_time'] = epoch_time_str
 
+        if utils.is_main_process() and wandb.run is not None:
+            _coco_stat_names = ["AP", "AP50", "AP75", "APs", "APm", "APl",
+                                "AR1", "AR10", "AR100", "ARs", "ARm", "ARl"]
+            wlog = {"epoch": epoch}
+            for k, v in train_stats.items():
+                if not k.endswith("_unscaled"):
+                    wlog[f"train/{k}"] = v
+            for k, v in test_stats.items():
+                if k == "coco_eval_bbox":
+                    for name, val in zip(_coco_stat_names, v):
+                        wlog[f"eval/{name}"] = val
+                elif not k.endswith("_unscaled") and isinstance(v, (int, float)):
+                    wlog[f"eval/{k}"] = v
+            wandb.log(wlog, step=epoch)
+
         if args.output_dir and utils.is_main_process():
             with (output_dir / "log.txt").open("a") as f:
                 f.write(json.dumps(log_stats) + "\n")
@@ -370,6 +395,8 @@ def main(args):
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))
     print('Training time {}'.format(total_time_str))
+    if utils.is_main_process() and wandb.run is not None:
+        wandb.finish()
 
     # remove the copied files.
     copyfilelist = vars(args).get('copyfilelist')
