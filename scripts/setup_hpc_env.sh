@@ -7,8 +7,6 @@ set -e
 PROJECT_DIR=$(pwd)
 cd $PROJECT_DIR
 
-module load cuda/12.4
-
 python3 -m venv .venv
 source .venv/bin/activate
 
