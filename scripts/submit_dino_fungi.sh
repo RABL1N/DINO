@@ -21,8 +21,8 @@ cd $PROJECT_DIR
 module load cuda/12.4
 source .venv/bin/activate
 
-# Check if CUDA ops are compiled
-if [ ! -f "models/dino/ops/build/lib.linux-x86_64-cpython-312/MultiScaleDeformableAttention.egg-info" ] && [ ! -d "models/dino/ops/build" ]; then
+# Compile CUDA ops if not already importable
+if ! python -c "import MultiScaleDeformableAttention" 2>/dev/null; then
     echo "Compiling DINO CUDA ops..."
     cd models/dino/ops
     python setup.py build install
