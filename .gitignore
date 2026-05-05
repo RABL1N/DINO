@@ -24,3 +24,7 @@ vis/
 model_zoo/
 model_zoo_old/
 scripts/
+
+.venv
+checkpoints/
+/datasets/fungi_01_05_26/
