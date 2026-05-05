@@ -1,0 +1,85 @@
+running build
+running build_py
+copying functions/__init__.py -> build/lib.linux-x86_64-cpython-312/functions
+copying functions/ms_deform_attn_func.py -> build/lib.linux-x86_64-cpython-312/functions
+copying modules/__init__.py -> build/lib.linux-x86_64-cpython-312/modules
+copying modules/ms_deform_attn.py -> build/lib.linux-x86_64-cpython-312/modules
+running build_ext
+building 'MultiScaleDeformableAttention' extension
+/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py:2357: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+Emitting ninja build file /home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/build/temp.linux-x86_64-cpython-312/build.ninja...
+Compiling objects...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+[1/1] /usr/local/cuda/bin/nvcc --generate-dependencies-with-compile --dependency-output /home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/build/temp.linux-x86_64-cpython-312/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.o.d -DWITH_CUDA -I/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src -I/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/torch/include -I/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -I/usr/local/cuda/include -I/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/include -I/usr/include/python3.12 -c -c /home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.cu -o /home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/build/temp.linux-x86_64-cpython-312/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.o -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr --compiler-options ''"'"'-fPIC'"'"'' -DCUDA_HAS_FP16=1 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -DTORCH_API_INCLUDE_EXTENSION_H '-DPYBIND11_COMPILER_TYPE="_gcc"' '-DPYBIND11_STDLIB="_libstdcpp"' '-DPYBIND11_BUILD_ABI="_cxxabi1016"' -DTORCH_EXTENSION_NAME=MultiScaleDeformableAttention -D_GLIBCXX_USE_CXX11_ABI=1 -gencode=arch=compute_86,code=compute_86 -gencode=arch=compute_86,code=sm_86 -std=c++17
+FAILED: [code=2] /home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/build/temp.linux-x86_64-cpython-312/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.o 
+/usr/local/cuda/bin/nvcc --generate-dependencies-with-compile --dependency-output /home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/build/temp.linux-x86_64-cpython-312/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.o.d -DWITH_CUDA -I/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src -I/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/torch/include -I/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -I/usr/local/cuda/include -I/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/include -I/usr/include/python3.12 -c -c /home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.cu -o /home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/build/temp.linux-x86_64-cpython-312/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.o -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr --compiler-options ''"'"'-fPIC'"'"'' -DCUDA_HAS_FP16=1 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -DTORCH_API_INCLUDE_EXTENSION_H '-DPYBIND11_COMPILER_TYPE="_gcc"' '-DPYBIND11_STDLIB="_libstdcpp"' '-DPYBIND11_BUILD_ABI="_cxxabi1016"' -DTORCH_EXTENSION_NAME=MultiScaleDeformableAttention -D_GLIBCXX_USE_CXX11_ABI=1 -gencode=arch=compute_86,code=compute_86 -gencode=arch=compute_86,code=sm_86 -std=c++17
+/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.cu(64): error: no suitable conversion function from "const at::DeprecatedTypeProperties" to "c10::ScalarType" exists
+          [&] { const auto& the_type = value.type(); constexpr const char* at_dispatch_name = "ms_deform_attn_forward_cuda"; at::ScalarType _st = ::detail::scalar_type(the_type); ; switch (_st) { case at::ScalarType::Double: { do { if constexpr (!at::should_include_kernel_dtype( at_dispatch_name, at::ScalarType::Double)) { if (!(false)) { ::c10::detail::torchCheckFail( __func__, "/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.cu", static_cast<uint32_t>(64), (::c10::detail::torchCheckMsgImpl( "Expected " "false" " to be true, but got false.  " "(Could this error message be improved?  If so, " "please report an enhancement request to PyTorch.)", "dtype '", toString(at::ScalarType::Double), "' not selected for kernel tag ", at_dispatch_name))); }; } } while (0); using scalar_t [[maybe_unused]] = c10::impl::ScalarTypeToCPPTypeT<at::ScalarType::Double>; return ([&] { ms_deformable_im2col_cuda(at::cuda::getCurrentCUDAStream(), value.data<scalar_t>() + n * im2col_step_ * per_value_size, spatial_shapes.data<int64_t>(), level_start_index.data<int64_t>(), sampling_loc.data<scalar_t>() + n * im2col_step_ * per_sample_loc_size, attn_weight.data<scalar_t>() + n * im2col_step_ * per_attn_weight_size, batch_n, spatial_size, num_heads, channels, num_levels, num_query, num_point, columns.data<scalar_t>()); })(); } case at::ScalarType::Float: { do { if constexpr (!at::should_include_kernel_dtype( at_dispatch_name, at::ScalarType::Float)) { if (!(false)) { ::c10::detail::torchCheckFail( __func__, "/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.cu", static_cast<uint32_t>(64), (::c10::detail::torchCheckMsgImpl( "Expected " "false" " to be true, but got false.  " "(Could this error message be improved?  If so, " "please report an enhancement request to PyTorch.)", "dtype '", toString(at::ScalarType::Float), "' not selected for kernel tag ", at_dispatch_name))); }; } } while (0); using scalar_t [[maybe_unused]] = c10::impl::ScalarTypeToCPPTypeT<at::ScalarType::Float>; return ([&] { ms_deformable_im2col_cuda(at::cuda::getCurrentCUDAStream(), value.data<scalar_t>() + n * im2col_step_ * per_value_size, spatial_shapes.data<int64_t>(), level_start_index.data<int64_t>(), sampling_loc.data<scalar_t>() + n * im2col_step_ * per_sample_loc_size, attn_weight.data<scalar_t>() + n * im2col_step_ * per_attn_weight_size, batch_n, spatial_size, num_heads, channels, num_levels, num_query, num_point, columns.data<scalar_t>()); })(); } default: if (!(false)) { ::c10::detail::torchCheckFail( __func__, "/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.cu", static_cast<uint32_t>(64), (::c10::detail::torchCheckMsgImpl( "Expected " "false" " to be true, but got false.  " "(Could this error message be improved?  If so, " "please report an enhancement request to PyTorch.)", '"', at_dispatch_name, "\" not implemented for '", toString(_st), "'"))); }; } }()
+                                                                                                                                                                        ^
+
+/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.cu(134): error: no suitable conversion function from "const at::DeprecatedTypeProperties" to "c10::ScalarType" exists
+          [&] { const auto& the_type = value.type(); constexpr const char* at_dispatch_name = "ms_deform_attn_backward_cuda"; at::ScalarType _st = ::detail::scalar_type(the_type); ; switch (_st) { case at::ScalarType::Double: { do { if constexpr (!at::should_include_kernel_dtype( at_dispatch_name, at::ScalarType::Double)) { if (!(false)) { ::c10::detail::torchCheckFail( __func__, "/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.cu", static_cast<uint32_t>(134), (::c10::detail::torchCheckMsgImpl( "Expected " "false" " to be true, but got false.  " "(Could this error message be improved?  If so, " "please report an enhancement request to PyTorch.)", "dtype '", toString(at::ScalarType::Double), "' not selected for kernel tag ", at_dispatch_name))); }; } } while (0); using scalar_t [[maybe_unused]] = c10::impl::ScalarTypeToCPPTypeT<at::ScalarType::Double>; return ([&] { ms_deformable_col2im_cuda(at::cuda::getCurrentCUDAStream(), grad_output_g.data<scalar_t>(), value.data<scalar_t>() + n * im2col_step_ * per_value_size, spatial_shapes.data<int64_t>(), level_start_index.data<int64_t>(), sampling_loc.data<scalar_t>() + n * im2col_step_ * per_sample_loc_size, attn_weight.data<scalar_t>() + n * im2col_step_ * per_attn_weight_size, batch_n, spatial_size, num_heads, channels, num_levels, num_query, num_point, grad_value.data<scalar_t>() + n * im2col_step_ * per_value_size, grad_sampling_loc.data<scalar_t>() + n * im2col_step_ * per_sample_loc_size, grad_attn_weight.data<scalar_t>() + n * im2col_step_ * per_attn_weight_size); })(); } case at::ScalarType::Float: { do { if constexpr (!at::should_include_kernel_dtype( at_dispatch_name, at::ScalarType::Float)) { if (!(false)) { ::c10::detail::torchCheckFail( __func__, "/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.cu", static_cast<uint32_t>(134), (::c10::detail::torchCheckMsgImpl( "Expected " "false" " to be true, but got false.  " "(Could this error message be improved?  If so, " "please report an enhancement request to PyTorch.)", "dtype '", toString(at::ScalarType::Float), "' not selected for kernel tag ", at_dispatch_name))); }; } } while (0); using scalar_t [[maybe_unused]] = c10::impl::ScalarTypeToCPPTypeT<at::ScalarType::Float>; return ([&] { ms_deformable_col2im_cuda(at::cuda::getCurrentCUDAStream(), grad_output_g.data<scalar_t>(), value.data<scalar_t>() + n * im2col_step_ * per_value_size, spatial_shapes.data<int64_t>(), level_start_index.data<int64_t>(), sampling_loc.data<scalar_t>() + n * im2col_step_ * per_sample_loc_size, attn_weight.data<scalar_t>() + n * im2col_step_ * per_attn_weight_size, batch_n, spatial_size, num_heads, channels, num_levels, num_query, num_point, grad_value.data<scalar_t>() + n * im2col_step_ * per_value_size, grad_sampling_loc.data<scalar_t>() + n * im2col_step_ * per_sample_loc_size, grad_attn_weight.data<scalar_t>() + n * im2col_step_ * per_attn_weight_size); })(); } default: if (!(false)) { ::c10::detail::torchCheckFail( __func__, "/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.cu", static_cast<uint32_t>(134), (::c10::detail::torchCheckMsgImpl( "Expected " "false" " to be true, but got false.  " "(Could this error message be improved?  If so, " "please report an enhancement request to PyTorch.)", '"', at_dispatch_name, "\" not implemented for '", toString(_st), "'"))); }; } }()
+                                                                                                                                                                         ^
+
+2 errors detected in the compilation of "/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.cu".
+ninja: build stopped: subcommand failed.
+Traceback (most recent call last):
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py", line 2507, in _run_ninja_build
+    subprocess.run(
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['ninja', '-v']' returned non-zero exit status 2.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/setup.py", line 64, in <module>
+    setup(
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/setuptools/__init__.py", line 117, in setup
+    return distutils.core.setup(**attrs)  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/setuptools/_distutils/core.py", line 186, in setup
+    return run_commands(dist)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/setuptools/_distutils/core.py", line 202, in run_commands
+    dist.run_commands()
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/setuptools/_distutils/dist.py", line 1000, in run_commands
+    self.run_command(cmd)
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/setuptools/dist.py", line 1107, in run_command
+    super().run_command(command)
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/setuptools/_distutils/dist.py", line 1019, in run_command
+    cmd_obj.run()
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/setuptools/_distutils/command/build.py", line 135, in run
+    self.run_command(cmd_name)
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/setuptools/_distutils/cmd.py", line 341, in run_command
+    self.distribution.run_command(command)
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/setuptools/dist.py", line 1107, in run_command
+    super().run_command(command)
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/setuptools/_distutils/dist.py", line 1019, in run_command
+    cmd_obj.run()
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/setuptools/command/build_ext.py", line 97, in run
+    _build_ext.run(self)
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/setuptools/_distutils/command/build_ext.py", line 367, in run
+    self.build_extensions()
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py", line 1011, in build_extensions
+    build_ext.build_extensions(self)
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/setuptools/_distutils/command/build_ext.py", line 483, in build_extensions
+    self._build_extensions_serial()
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/setuptools/_distutils/command/build_ext.py", line 509, in _build_extensions_serial
+    self.build_extension(ext)
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/setuptools/command/build_ext.py", line 262, in build_extension
+    _build_ext.build_extension(self, ext)
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/Cython/Distutils/build_ext.py", line 136, in build_extension
+    super().build_extension(ext)
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/setuptools/_distutils/command/build_ext.py", line 564, in build_extension
+    objects = self.compiler.compile(
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py", line 816, in unix_wrap_ninja_compile
+    _write_ninja_file_and_compile_objects(
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py", line 2160, in _write_ninja_file_and_compile_objects
+    _run_ninja_build(
+  File "/home/rasmuslinnemann/Projects/Bachelor/DINO/.venv/lib/python3.12/site-packages/torch/utils/cpp_extension.py", line 2523, in _run_ninja_build
+    raise RuntimeError(message) from e
+RuntimeError: Error compiling objects for extension

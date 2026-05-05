@@ -1,0 +1,4 @@
+# ninja log v7
+0	5917	1777983827781175001	/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/build/temp.linux-x86_64-cpython-312/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cpu/ms_deform_attn_cpu.o	69e36759aacd9d81
+0	14846	1777983827782226664	/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/build/temp.linux-x86_64-cpython-312/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/vision.o	3afde8fbc5ceee0a
+12	17462	1777983932651889763	/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/build/temp.linux-x86_64-cpython-312/home/rasmuslinnemann/Projects/Bachelor/DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.o	51645bfee050086
