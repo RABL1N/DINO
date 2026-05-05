@@ -9,6 +9,7 @@ lr_backbone = 1e-7
 batch_size = 4
 epochs = 1000
 lr_drop = 1001 # No decay during this run
+save_checkpoint_interval = 100
 
 # Matching MaskDINO's image resolution
 data_aug_scales = [1024]
