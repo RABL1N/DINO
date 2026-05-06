@@ -236,7 +236,7 @@ class RandomRotation(object):
         corners[:, :, 1] -= cy
         rot = torch.tensor([[cos_a, -sin_a], [sin_a, cos_a]],
                            dtype=corners.dtype, device=corners.device)
-        corners = corners @ rot.T
+        corners = corners @ rot
         corners[:, :, 0] += cx
         corners[:, :, 1] += cy
 
