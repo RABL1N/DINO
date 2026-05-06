@@ -224,26 +224,23 @@ class RandomRotation(object):
         cos_a, sin_a = math.cos(rad), math.sin(rad)
 
         x1, y1, x2, y2 = boxes[:, 0], boxes[:, 1], boxes[:, 2], boxes[:, 3]
-        # Stack all 4 corners: (N, 4, 2)
-        corners = torch.stack([
-            torch.stack([x1, y1], dim=1),
-            torch.stack([x2, y1], dim=1),
-            torch.stack([x2, y2], dim=1),
-            torch.stack([x1, y2], dim=1),
-        ], dim=1)
+        bw, bh = x2 - x1, y2 - y1
 
-        corners[:, :, 0] -= cx
-        corners[:, :, 1] -= cy
+        # Rotate only the box center; preserve original width and height.
+        # Colonies are approximately circular so their tight bounding box doesn't
+        # expand under rotation — only the center moves.
+        bcx = (x1 + x2) / 2 - cx
+        bcy = (y1 + y2) / 2 - cy
         rot = torch.tensor([[cos_a, -sin_a], [sin_a, cos_a]],
-                           dtype=corners.dtype, device=corners.device)
-        corners = corners @ rot
-        corners[:, :, 0] += cx
-        corners[:, :, 1] += cy
+                           dtype=boxes.dtype, device=boxes.device)
+        centers = torch.stack([bcx, bcy], dim=1) @ rot
+        ncx = centers[:, 0] + cx
+        ncy = centers[:, 1] + cy
 
-        new_x1 = corners[:, :, 0].min(dim=1).values.clamp(0, w)
-        new_y1 = corners[:, :, 1].min(dim=1).values.clamp(0, h)
-        new_x2 = corners[:, :, 0].max(dim=1).values.clamp(0, w)
-        new_y2 = corners[:, :, 1].max(dim=1).values.clamp(0, h)
+        new_x1 = (ncx - bw / 2).clamp(0, w)
+        new_y1 = (ncy - bh / 2).clamp(0, h)
+        new_x2 = (ncx + bw / 2).clamp(0, w)
+        new_y2 = (ncy + bh / 2).clamp(0, h)
 
         new_boxes = torch.stack([new_x1, new_y1, new_x2, new_y2], dim=1)
         keep = ((new_x2 - new_x1) > 1) & ((new_y2 - new_y1) > 1)
