@@ -2,6 +2,7 @@
 """
 Transforms and data augmentation for both image + bbox.
 """
+import math
 import random
 
 import PIL
@@ -194,6 +195,66 @@ class RandomHorizontalFlip(object):
     def __call__(self, img, target):
         if random.random() < self.p:
             return hflip(img, target)
+        return img, target
+
+
+class RandomRotation(object):
+    """Rotate image and boxes by a uniformly sampled angle.
+
+    Boxes are approximated as the axis-aligned bounding box of their rotated
+    corners (conservative but correct for detection). Masks are not supported
+    since DINO is detection-only.
+    """
+
+    def __init__(self, angles=(-180, 180)):
+        self.angles = angles
+
+    def __call__(self, img, target):
+        angle = random.uniform(*self.angles)
+        w, h = img.size
+        img = img.rotate(angle, resample=PIL.Image.BILINEAR, expand=False)
+
+        if target is None or "boxes" not in target or len(target["boxes"]) == 0:
+            return img, target
+
+        target = target.copy()
+        boxes = target["boxes"]  # (N, 4) xyxy pixel coords
+        cx, cy = w / 2.0, h / 2.0
+        rad = math.radians(angle)
+        cos_a, sin_a = math.cos(rad), math.sin(rad)
+
+        x1, y1, x2, y2 = boxes[:, 0], boxes[:, 1], boxes[:, 2], boxes[:, 3]
+        # Stack all 4 corners: (N, 4, 2)
+        corners = torch.stack([
+            torch.stack([x1, y1], dim=1),
+            torch.stack([x2, y1], dim=1),
+            torch.stack([x2, y2], dim=1),
+            torch.stack([x1, y2], dim=1),
+        ], dim=1)
+
+        corners[:, :, 0] -= cx
+        corners[:, :, 1] -= cy
+        rot = torch.tensor([[cos_a, -sin_a], [sin_a, cos_a]],
+                           dtype=corners.dtype, device=corners.device)
+        corners = corners @ rot.T
+        corners[:, :, 0] += cx
+        corners[:, :, 1] += cy
+
+        new_x1 = corners[:, :, 0].min(dim=1).values.clamp(0, w)
+        new_y1 = corners[:, :, 1].min(dim=1).values.clamp(0, h)
+        new_x2 = corners[:, :, 0].max(dim=1).values.clamp(0, w)
+        new_y2 = corners[:, :, 1].max(dim=1).values.clamp(0, h)
+
+        new_boxes = torch.stack([new_x1, new_y1, new_x2, new_y2], dim=1)
+        keep = ((new_x2 - new_x1) > 1) & ((new_y2 - new_y1) > 1)
+
+        target["boxes"] = new_boxes[keep]
+        target["area"] = (new_boxes[keep, 2] - new_boxes[keep, 0]) * \
+                         (new_boxes[keep, 3] - new_boxes[keep, 1])
+        for field in ["labels", "iscrowd"]:
+            if field in target:
+                target[field] = target[field][keep]
+
         return img, target
 
 
