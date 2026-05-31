@@ -10,9 +10,9 @@ if [ -z "$CHECKPOINT" ]; then
 fi
 
 python main.py \
-  --output_dir logs/dino_r50_48img_lr1e6 \
+  --output_dir logs/dino_r50_75img_lr1e6_flip \
   -c config/DINO/DINO_4scale_fungi.py \
-  --coco_path datasets/fungi_01_05_26 \
+  --coco_path datasets/fungi_31_05_26 \
   --pretrain_model_path $CHECKPOINT \
   --finetune_ignore label_enc.weight class_embed \
   --options dn_box_noise_scale=1.0 \

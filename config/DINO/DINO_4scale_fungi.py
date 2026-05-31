@@ -9,7 +9,7 @@ lr_backbone = 1e-7
 batch_size = 4
 epochs = 1000
 lr_drop = 1001 # No decay during this run
-save_checkpoint_interval = 42  # ~500 iterations (48 imgs / batch 4 = 12 iters/epoch)
+save_checkpoint_interval = 42  # ~800 iterations (75 imgs / batch 4 ≈ 19 iters/epoch)
 
 # Dense fungi images can have up to ~500 colonies; raise cap from default 300
 num_select = 500

@@ -3,9 +3,9 @@
 
 source .venv/bin/activate
 python main.py \
-  --output_dir logs/dino_r50_48img_lr1e6_test \
+  --output_dir logs/dino_r50_75img_lr1e6_flip_test \
   -c config/DINO/DINO_4scale_fungi.py \
-  --coco_path datasets/fungi_01_05_26 \
+  --coco_path datasets/fungi_31_05_26 \
   --pretrain_model_path checkpoints/checkpoint0033_4scale.pth \
   --finetune_ignore label_enc.weight class_embed \
   --options batch_size=1 epochs=3 \

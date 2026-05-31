@@ -519,10 +519,13 @@ def make_coco_transforms(image_set, fix_size=False, strong_aug=False, args=None)
                 normalize,
             ])
         
+        # DINO is detection-only (no masks), so it cannot recompute exact rotated
+        # boxes the way MaskDINO does. Use horizontal + vertical flips instead:
+        # both are exact for axis-aligned boxes and introduce no label noise.
         return T.Compose([
             T.RandomHorizontalFlip(),
+            T.RandomVerticalFlip(),
             T.RandomResize(scales, max_size=max_size),
-            T.RandomRotation(angles=(-180, 180)),
             normalize,
         ])
 

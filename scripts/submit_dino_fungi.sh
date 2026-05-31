@@ -5,9 +5,9 @@
 #BSUB -R "rusage[mem=40GB]"
 #BSUB -R "span[hosts=1]"
 #BSUB -W 24:00
-#BSUB -J dino_r50_48img_lr1e6
-#BSUB -o logs/dino_r50_48img_lr1e6_%J.out
-#BSUB -e logs/dino_r50_48img_lr1e6_%J.err
+#BSUB -J dino_r50_75img_lr1e6_flip
+#BSUB -o logs/dino_r50_75img_lr1e6_flip_%J.out
+#BSUB -e logs/dino_r50_75img_lr1e6_flip_%J.err
 #BSUB -u s234806@dtu.dk
 #BSUB -B
 #BSUB -N
@@ -31,7 +31,7 @@ else
     echo "DINO CUDA ops already compiled, skipping."
 fi
 
-mkdir -p logs/dino_r50_48img_lr1e6
+mkdir -p logs/dino_r50_75img_lr1e6_flip
 
 # Run the training script we created earlier
 bash scripts/DINO_train_fungi.sh checkpoints/checkpoint0033_4scale.pth
