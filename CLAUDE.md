@@ -41,8 +41,8 @@ bash scripts/DINO_train_fungi.sh checkpoints/checkpoint0033_4scale.pth
 python main.py \
   --output_dir logs/eval \
   -c config/DINO/DINO_4scale_fungi.py \
-  --coco_path datasets/fungi_01_05_26 \
-  --eval --resume logs/DINO_fungi_finetune/checkpoint_best_regular.pth \
+  --coco_path datasets/fungi_31_05_26 \
+  --eval --resume logs/dino_r50_75img_lr1e6_flip/checkpoint_best_regular.pth \
   --options dn_box_noise_scale=1.0
 ```
 
@@ -50,10 +50,11 @@ python main.py \
 
 This is a Bachelor's project comparing DINO (detection-only) against MaskDINO (instance segmentation) on a small custom fungi dataset. The goal is an apples-to-apples comparison of whether using coarse masks (MaskDINO) is better than no masks (DINO) for colony detection.
 
-- **Dataset**: `datasets/fungi_01_05_26/` — COCO-format, 2 classes, fungi colonies in petri dishes
+- **Dataset**: `datasets/fungi_31_05_26/` — COCO-format, single class (`mold`), 75 train / 19 val fungi-colony petri-dish images (replaces the older `fungi_01_05_26`)
 - **Pretrained checkpoint**: `checkpoints/checkpoint0033_4scale.pth` — DINO R50 4-scale epoch 32 from the official repo
-- **Fungi config**: `config/DINO/DINO_4scale_fungi.py` — overrides base with 2 classes, 1000 epochs, lr=1e-6/1e-7, batch=4, 1024px resolution (matches MaskDINO setup)
-- **Training logs**: `logs/DINO_fungi_finetune/`
+- **Fungi config**: `config/DINO/DINO_4scale_fungi.py` — overrides base with `num_classes=2` (one foreground class + background, DINO's max-id+1 convention), 1000 epochs, lr=1e-6/1e-7, batch=4, 1024px resolution (matches MaskDINO setup)
+- **Training logs**: `logs/dino_r50_75img_lr1e6_flip/`
+- **Augmentation** (`datasets/coco.py` → `make_coco_transforms`, train branch): random **horizontal + vertical flips** then resize to 1024px. No rotation — DINO is detection-only, so it can't recompute exact rotated boxes the way MaskDINO does (which uses masks); flips are label-exact for axis-aligned boxes. See `RandomVerticalFlip` in `datasets/transforms.py`.
 
 ## W&B Logging
 
